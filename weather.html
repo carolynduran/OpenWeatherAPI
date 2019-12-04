@@ -40,9 +40,8 @@
     	// You will need to update this query with the city, weather format (Celsius or Fahrenheit) and your OpenWeatherMap ID
 
     	// Right now I have it set to Chicago.  The default should be Ann Arbor/Fahreheit.
-		let query = "http://api.openweathermap.org/data/2.5/weather?q="+q+"&units="+units+"&APPID="+YourWeatherAppID;
-				// **^^is it okay to change query to this rather than:
-			 // "http://api.openweathermap.org/data/2.5/weather?q=Ann+Arbor&units=imperial&APPID="+YourWeatherAppID ????
+		let query = "https://api.openweathermap.org/data/2.5/weather?q="+q+"&units="+units+"&APPID="+YourWeatherAppID;
+			 // "http://api.openweathermap.org/data/2.5/weather?q=Ann+Arbor&units=imperial&APPID="+YourWeatherAppID
 
         console.log("Query is :" + query)
 				console.log($('#location').val())
@@ -61,7 +60,7 @@
 					 units = $('#celcius').val();
 					}
 
-					query = "http://api.openweathermap.org/data/2.5/weather?q="+q+"&units="+units+"&APPID="+YourWeatherAppID;
+					query = "https://api.openweathermap.org/data/2.5/weather?q="+q+"&units="+units+"&APPID="+YourWeatherAppID;
 
 
         $.getJSON(query,function(json){
@@ -86,7 +85,7 @@
 				$("#temp").text(temp);
 				$("#high").text(high);
 				$("#low").text(low);
-				$("#tempImg").attr("src", 'http://openweathermap.org/img/wn/'+icon+'@2x.png');
+				$("#tempImg").attr("src", 'https://openweathermap.org/img/wn/'+icon+'@2x.png');
 
     })
 }
