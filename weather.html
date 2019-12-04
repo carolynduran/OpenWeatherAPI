@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather</title>
+<!-- Don't forget to link to jQuery -->
+<script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<style>
+	input{
+		margin: 10px 0px;
+		padding: 5px;
+	}
+	#forecast{
+		display: none;
+		/*This div should not appear until the weather is returned.*/
+	}
+	#forecast div{
+		width: 25vw;
+		border: 8px solid blue;
+		margin: 0 auto;
+		background: black;
+	}
+	img{
+		width:100%;
+	}
+</style>
+<script>
+	var YourWeatherAppID = "7a0bbf95d663f5ea8c32175c37709a23";
+
+    function gettingJSON(){
+    	console.log("Hi")
+
+    	// Use the OpenWeather API to return:
+    	//  the current temperature -- main.temp
+    	//  the high temperature for the day -- main.temp_max
+    	//  the low temperature for the day -- main.temp_min
+    	//  the icon for the current weather. -- weather.icon
+
+
+    	// You will need to update this query with the city, weather format (Celsius or Fahrenheit) and your OpenWeatherMap ID
+
+    	// Right now I have it set to Chicago.  The default should be Ann Arbor/Fahreheit.
+		let query = "http://api.openweathermap.org/data/2.5/weather?q="+q+"&units="+units+"&APPID="+YourWeatherAppID;
+				// **^^is it okay to change query to this rather than:
+			 // "http://api.openweathermap.org/data/2.5/weather?q=Ann+Arbor&units=imperial&APPID="+YourWeatherAppID ????
+
+        console.log("Query is :" + query)
+				console.log($('#location').val())
+				var q = "Ann+Arbor"
+				var units = "imperial"
+
+				if($('#location').val()){
+					q = $('#location').val();
+					console.log(q)
+				}
+
+				if($('#fahrenheit').is(":checked")){
+					 units = $('#fahrenheit').val();
+					}
+				if($('#celcius').is(":checked")){
+					 units = $('#celcius').val();
+					}
+
+					query = "http://api.openweathermap.org/data/2.5/weather?q="+q+"&units="+units+"&APPID="+YourWeatherAppID;
+
+
+        $.getJSON(query,function(json){
+
+						$("#forecast").css("display","block");
+
+					var city = json.name
+					var temp = json.main.temp;
+					var high = json.main.temp_max;
+					var low = json.main.temp_min;
+					var icon = json['weather'][0]['icon'];
+
+            console.log(JSON.stringify(json));
+
+						console.log(city)
+						console.log(temp)
+						console.log(high)
+						console.log(low)
+						console.log(icon)
+
+				$("#loc").text(city);
+				$("#temp").text(temp);
+				$("#high").text(high);
+				$("#low").text(low);
+				$("#tempImg").attr("src", 'http://openweathermap.org/img/wn/'+icon+'@2x.png');
+
+    })
+}
+    </script>
+</head>
+<body>
+	<!-- DO NOT CHANGE ANY CODE IN THE BODY OF THIS FILE. -->
+	<label for ="location">City:</label><input type = "text" id = "location"><br>
+	<input type = "radio" name = "temp" value = "imperial" id = "fahrenheit"> <label for = "fahrenheit">Fahrenheit</label><br>
+	<input type = "radio" name = "temp" value = "metric" id = "celcius"> <label for = "celcius">Celcius</label><br>
+
+	<button id = "getIt" onclick = " gettingJSON()">Get Weather</button>
+
+
+	<div id = "forecast">
+		<div>
+		<img id = "tempImg" src="" alt = "" title = "">
+		</div>
+		<p>The temperature in <span id = "loc"></span> is currently <span id = "temp"></span>.</p>
+		<p>The high today will be <span id = "high"></span> and the low will be <span id = "low"></span>.</p>
+
+	</div>
+</body>
+</html>
